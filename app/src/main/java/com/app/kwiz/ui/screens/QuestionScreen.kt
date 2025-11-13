@@ -113,7 +113,7 @@ fun QuestionScreenContent(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     TimerAnimation(
-                        progress = (state.currentIndex + 1).toFloat() / state.questions.size,
+                        key = (state.currentIndex + 1).toFloat() / state.questions.size,
                         durationMillis = 20 * 1000, // time per question
                         onTimerComplete = { onSkip() })
 
