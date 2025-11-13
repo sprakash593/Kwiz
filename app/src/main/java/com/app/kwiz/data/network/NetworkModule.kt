@@ -4,10 +4,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
+import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkModule {
 
-    private const val BASE_URL = "http://172.16.17.83:3000/"
+    private const val BASE_URL = "https://gist.githubusercontent.com/"
 
     fun makeLoggingInterceptor(isEnabled: Boolean): HttpLoggingInterceptor {
         return HttpLoggingInterceptor().apply {
@@ -27,6 +28,7 @@ object NetworkModule {
     fun makeRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
     }

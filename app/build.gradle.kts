@@ -54,7 +54,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation(libs.androidx.core.splashscreen)
 
     // --- Jetpack Compose (with BOM) ---
     implementation(platform(libs.compose.bom))
@@ -79,6 +79,8 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.okhttp.urlconnection)
     implementation (libs.retrofit)
+    implementation (libs.retrofit.gson)
+
 
     // --- Debug & Testing ---
     debugImplementation(libs.compose.ui.tooling)

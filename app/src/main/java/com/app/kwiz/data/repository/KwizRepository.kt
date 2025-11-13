@@ -6,23 +6,21 @@ import com.app.kwiz.data.models.Question
 import com.app.kwiz.data.service.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.json.Json
 
 class KwizRepository(
     private val apiService: ApiService,
-    private val localDataSource: LocalDataSource,
-    private val json: Json = Json { ignoreUnknownKeys = true }
+    private val localDataSource: LocalDataSource
 ) {
 
-    suspend fun fetchQuestions(): List<Question> = withContext(Dispatchers.IO) {
+    suspend fun fetchQuestions(context: Context): List<Question> = withContext(Dispatchers.IO) {
         try {
-            val response = apiService.fetchQuestions()
-            json.decodeFromString(response)
-        } catch (e: Exception) {
-            emptyList()
+            apiService.fetchQuestions()
+        } catch (t: Throwable) {
+            t.printStackTrace()
+            loadLocalQuestions(context)
         }
     }
 
-    suspend fun loadLocalQuestions(context: Context): List<Question> =
-        localDataSource.loadQuestions(context)
+    private fun loadLocalQuestions(context: Context): List<Question> = localDataSource.loadQuestions(context)
+
 }

@@ -1,5 +1,6 @@
 package com.app.kwiz
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,10 +16,11 @@ class KwizActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val repository by lazy{ AppContainer.provideKwizRepository()}
 
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         setContent {
             MaterialTheme {
                 AppNavHost(viewModel = viewModel {
-                    KwizViewModel(repository, this@KwizActivity.applicationContext)
+                    KwizViewModel(repository)
                 })
             }
         }

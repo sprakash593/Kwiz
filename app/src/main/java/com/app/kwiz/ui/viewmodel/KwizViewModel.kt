@@ -1,6 +1,7 @@
 package com.app.kwiz.ui.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,20 +14,18 @@ import kotlinx.coroutines.launch
 
 
 class KwizViewModel(
-    private val repository: KwizRepository,
-    private val context: Context
-) : ViewModel() {
+    private val repository: KwizRepository) : ViewModel() {
 
     var uiState: KwizUiState by mutableStateOf(KwizUiState.Loading)
         private set
 
     private var autoAdvanceJob: Job? = null
 
-    fun load() {
+    fun load(context: Context) {
         viewModelScope.launch {
             uiState = KwizUiState.Loading
             try {
-                val questions = repository.loadLocalQuestions(context.applicationContext)
+                val questions = repository.fetchQuestions(context.applicationContext)
                 uiState = KwizUiState.Ready(questions = questions)
             } catch (t: Throwable) {
                 t.printStackTrace()
